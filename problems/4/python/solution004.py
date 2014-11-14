@@ -26,11 +26,12 @@ def is_palindrome(i):
     
     return True
 
-palindromes = []
-for i in range(100,999):
-    for j in range(i,999): # Start from i, because i * j == j * i.
+pmax = 0
+for i in range(100,1000):
+    for j in range(i,1000): # Start from i, because i * j == j * i.
         p = i * j
         if is_palindrome(p):
-            palindromes.append(p)
+            if p > pmax:
+                pmax = p
 
-print(max(palindromes))
+print(pmax)
