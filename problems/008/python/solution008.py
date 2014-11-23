@@ -1,4 +1,4 @@
-with open ("../data.txt", "r") as myfile:
+with open ("./data.txt", "r") as myfile:
 	numstr = myfile.read().replace('\n', '')
 
 digits = list(map(int, numstr)) # string to list of ints
