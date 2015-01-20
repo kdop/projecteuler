@@ -1,35 +1,50 @@
 #include <iostream>
+#include <stdint.h>
+#include <stdlib.h>
+
 
 using namespace std;
 
-int xMax = 2;
-int yMax = 2;
-uint64_t routes = 0;
+uint64_t *line_buffer;
+uint64_t n;
 
-void nextMove(int x, int y) {
-	int xtmp;
-	int ytmp;
-	
-	if (x < xMax) {
-		//cout << "move left" << endl;
-		xtmp = x + 1;
-		nextMove(xtmp, y);
-	}
+
+uint64_t calculate(int x, int y) {
+	// Last row routes.
+	for(int i=x-1; i>=0; i--)
+		line_buffer[i] = 1 + x - i;
 		
-	if (y < yMax) {
-		//cout << "move down" << endl;
-		ytmp = y + 1;
-		nextMove(x, ytmp);
+	for(int xt=x-2; xt >=0; xt--) {
+		for(int yt=y-1; yt >=0; yt--) {
+			if (yt == y-1)
+				n = line_buffer[yt] + 1;
+			else
+				n = line_buffer[yt] + n;
+			
+			line_buffer[yt] = n;
+		}
 	}
 	
-	if (x == xMax && y == yMax) {
-		//cout << x << "," << y << endl;
-		routes++;
-	}
+	return n;
 }
 
 int main() {
-	nextMove(0, 0);
-	cout << routes << endl;
+	//nextMove(0, 0);
+	//cout << routes << endl;
+	
+	int x, y;
+	
+	cout << "give matrix columns #:"; cin >> x;
+	cout << "give matrix rows #:"; cin >> y;
+	
+	// line_buff keeps the previously calculated row.
+	line_buffer = (uint64_t *)malloc(y * sizeof(uint64_t));
+			
+	calculate(x, y);
+	
+	cout << "answer:" << n << endl;
+	
+	free(line_buffer);
+	
 	return 0;
 }
