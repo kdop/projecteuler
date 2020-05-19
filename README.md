@@ -1,4 +1,4 @@
 projecteuler
 ============
 
-This is a repository for my attemps on Project Euler
+Project Euler solutions in various languages.
